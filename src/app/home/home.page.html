@@ -1,11 +1,11 @@
-
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900|Ubuntu:400,500,700" rel="stylesheet">
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Código Postal Único
+      Código de Localização Único
     </ion-title>
     <ion-toolbar>
-      <ion-searchbar placeholder="Buscar Endereço" (ionChange)="buscarEndereco"></ion-searchbar>
+      <ion-searchbar placeholder="Buscar Endereço" [(ngModel)]="address" (ionInput)="searchLocation()"></ion-searchbar>
     </ion-toolbar>
   </ion-toolbar>
   <div class="ion-padding">Clique no local para obter o código único (Plus Code)</div>
@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Title</ion-title>
+      <ion-title size="large">Código de Localização</ion-title>
     </ion-toolbar>
   </ion-header>
   <!-- <div #map id="map"></div>

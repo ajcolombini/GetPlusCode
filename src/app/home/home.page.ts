@@ -1,12 +1,11 @@
 /// <reference types="@types/google.maps" />
 
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef,  ViewChild } from '@angular/core';
 import { MapsService } from 'src/services/maps.service';
 import { environment } from 'src/environments/environment';
 import { Loader } from '@googlemaps/js-api-loader';
 import OpenLocationCode from 'src/services/pluscodes.service';
 import { Clipboard } from '@awesome-cordova-plugins/clipboard/ngx';
-//import { PlusCodeService } from 'src/services/plus-code.service';
 
 
 
@@ -16,7 +15,7 @@ import { Clipboard } from '@awesome-cordova-plugins/clipboard/ngx';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage  {
+export class HomePage {
   private map!: google.maps.Map;
 
   currentCoords: any;
@@ -24,7 +23,7 @@ export class HomePage  {
   // Create a marker object.
   marker: any;
   outline: any;
-
+  address: any;
 
   @ViewChild('map')
   mapElement!: ElementRef;
@@ -90,20 +89,21 @@ export class HomePage  {
       document.getElementById("map") as HTMLElement,
       options
     );
-    
+
     //link event click
     google.maps.event.addListener(this.map, 'click', (event: google.maps.KmlMouseEvent) => {
       this.mapClick(event);
     });
 
+    
     this.addMarker();
 
   }
 
 
 
-  buscarEndereco($event: any): void {
-    console.log($event.data);
+  searchLocation(): void {
+    console.log(this.address);
   }
 
 
@@ -136,10 +136,10 @@ export class HomePage  {
 
 
     const codeLocation = OpenLocationCode.decode(fullCode);
-    
+
     this.marker.setPosition(new google.maps.LatLng(codeLocation.latitudeCenter, codeLocation.longitudeCenter));
     this.marker.setTitle(fullCode);
-    
+
 
     const path = [
       { lat: codeLocation.latitudeLo, lng: codeLocation.longitudeLo },
@@ -151,7 +151,7 @@ export class HomePage  {
 
     if (this.flightPath != undefined)
       this.flightPath.setMap(null);
-    
+
     this.flightPath = new google.maps.Polyline({
       path: path,
       strokeColor: 'limegreen',
@@ -161,30 +161,30 @@ export class HomePage  {
     });
 
     this.flightPath.setPath(path);
-    
+
     this.addInfoWindow(this.map, fullCode);
   }
 
 
   addInfoWindow(map: any, contentString: any) {
-    
-     let content =
-    '<div id="content" style="color:black!important">' +
+
+    let content =
+      '<div id="content" style="color:black!important">' +
       '<div id="siteNotice">' +
       "</div>" +
       '<h2 id="firstHeading"s>' + contentString + '</h2>' +
       '<div id="bodyContent">' +
-       "<p>Esse é o Código de Localização</p>" +
-       //"<p><ion-button expand='block' (click)=copyToClipboard('" + contentString + "')>Copiar</ion-button></p>"
+      "<p>Esse é o Código de Localização</p>" +
+      //"<p><ion-button expand='block' (click)=copyToClipboard('" + contentString + "')>Copiar</ion-button></p>"
       "</div>" +
-    "</div>";
-    
+      "</div>";
+
     if (this.infoWindow != undefined)
       this.infoWindow.close(); // destroy previous
-    
+
     this.infoWindow = new google.maps.InfoWindow({
-       ariaLabel: 'info',
-       content: content
+      ariaLabel: 'info',
+      content: content
     });
 
     this.marker.addListener("click", () => {
@@ -199,5 +199,6 @@ export class HomePage  {
     alert(info);
     this.clipboard.copy(info);
   }
+
 
 }
