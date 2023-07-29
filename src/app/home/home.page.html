@@ -1,20 +1,28 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Código Postal Único
     </ion-title>
+    <ion-toolbar>
+      <ion-searchbar placeholder="Buscar Endereço" (ionChange)="buscarEndereco"></ion-searchbar>
+    </ion-toolbar>
   </ion-toolbar>
+  <div class="ion-padding">Clique no local para obter o código único (Plus Code)</div>
 </ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Title</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <!-- <div #map id="map"></div>
+  <div id="code-display">
+    Click on the map to get the plus code
+    <br/> (You can zoom, drag and pan)
+  </div> -->
+  <div id="map-container">
+    <!-- Ensure to set a fixed height for the map container to make it visible -->
+    <div id="map" style="height: 85vh"></div>
   </div>
 </ion-content>
